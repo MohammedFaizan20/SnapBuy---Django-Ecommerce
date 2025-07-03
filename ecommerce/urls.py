@@ -1,4 +1,4 @@
-from django.http import HttpResponse 
+from store.views import create_admin_user
 from django.contrib import admin
 from django.urls import path, include
 
@@ -7,12 +7,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-def health_check(request):
-    return HttpResponse("OK!")
 
 urlpatterns = [
 
-     path('__health__/', health_check),
+    path('__createadmin__/', create_admin_user),
+
 
     # Admin url
     

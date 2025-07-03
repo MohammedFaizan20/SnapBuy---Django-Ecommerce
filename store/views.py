@@ -2,9 +2,19 @@ from django.shortcuts import render
 from . models import Category, Product
 from django.shortcuts import get_object_or_404
 
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+
 
 
 # Create your views here.
+
+def create_admin_user(request):
+    if User.objects.filter(username='admin').exists():
+        return HttpResponse("Admin user already exists.")
+    else:
+        User.objects.create_superuser('admin', 'admin@example.com', 'yourpassword')
+        return HttpResponse("Superuser created!")
 
 
 def store(request):
