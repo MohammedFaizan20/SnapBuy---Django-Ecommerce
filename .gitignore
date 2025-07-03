@@ -1,0 +1,57 @@
+# ========================
+# Python
+# ========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# ========================
+# Django
+# ========================
+*.log
+*.pot
+*.pyc
+*.pyo
+
+# SQLite database (local dev)
+*.sqlite3
+*.db
+
+# ========================
+# Virtual environments
+# ========================
+venv/
+env/
+ENV/
+.venv/
+
+# ========================
+# Environment variables
+# ========================
+.env
+*.env
+
+# ========================
+# Static & media
+# ========================
+# Local static build folder — keep it ignored because it's re-built with collectstatic
+staticfiles/
+
+# Local media files — ignore if using S3 for uploads
+media/
+
+# ========================
+# IDE & editor
+# ========================
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# ========================
+# OS-specific
+# ========================
+.DS_Store
+Thumbs.db
+ehthumbs.db

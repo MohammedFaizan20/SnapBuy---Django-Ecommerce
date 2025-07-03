@@ -1,0 +1,130 @@
+{% include "store/base.html" %}
+{% load static %}
+{% block content %}
+
+<style>
+  body {
+    background-color: #f5f5f5;
+  }
+</style>
+
+<div class="container bg-white shadow-md p-5" style="width: 500px; border-radius: 8px;">
+  <h3>Complete Your Payment</h3>
+  <p>Fill in your details to complete the payment.</p>
+  <hr />
+
+  <!-- Form Fields -->
+  <div class="form-field">
+    <input class="form-control validate" id="name" type="text" placeholder="Full Name*" value="{{ shipping.full_name }}" required />
+  </div>
+  <br />
+  <div class="form-field">
+    <input class="form-control validate" id="email" type="email" placeholder="Email Address*" value="{{ shipping.email }}" required />
+  </div>
+  <br />
+  <div class="form-field">
+    <input class="form-control validate" id="address1" type="text" placeholder="Address Line 1*" value="{{ shipping.address1 }}" required />
+  </div>
+  <br />
+  <div class="form-field">
+    <input class="form-control validate" id="address2" type="text" placeholder="Address Line 2*" value="{{ shipping.address2 }}" />
+  </div>
+  <br />
+  <div class="form-field">
+    <input class="form-control validate" id="city" type="text" placeholder="City*" value="{{ shipping.city }}" required />
+  </div>
+  <br />
+  <div class="form-field">
+    <input class="form-control" id="state" type="text" placeholder="State" value="{{ shipping.state }}" />
+  </div>
+  <br />
+  <div class="form-field">
+    <input class="form-control" id="zipcode" type="text" placeholder="Zipcode" value="{{ shipping.zipcode }}" />
+  </div>
+  <br />
+
+  <!-- Razorpay Button -->
+  <button id="rzp-button" class="btn btn-primary w-100">Pay Now</button>
+</div>
+
+<!-- Razorpay & jQuery -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  $("#rzp-button").click(function (e) {
+    e.preventDefault();
+
+    let valid = true;
+    $(".validate").each(function () {
+      if ($(this).val().trim() === "") {
+        valid = false;
+      }
+    });
+
+    if (!valid) {
+      alert("Please fill all required fields.");
+      return;
+    }
+
+    $(this).prop("disabled", true).text("Processing...");
+
+    const options = {
+      key: "{{ key_id }}",
+      amount: "{{ amount }}",
+      currency: "INR",
+      name: "SnapBuy",
+      description: "Complete Order",
+      order_id: "{{ payment.id }}",
+
+      // Handle payment response and redirect
+      handler: function (response) {
+        $.ajax({
+          type: "POST",
+          url: "{% url 'payment:complete-order' %}",
+          data: {
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+            action: "post",
+            name: $("#name").val(),
+            email: $("#email").val(),
+            address1: $("#address1").val(),
+            address2: $("#address2").val(),
+            city: $("#city").val(),
+            state: $("#state").val(),
+            zipcode: $("#zipcode").val(),
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+          },
+          success: function (json) {
+            if (json.success) {
+              // Redirect to success page
+              window.location.href = "{% url 'payment:payment-success' %}";
+            } else {
+              // Redirect to failed page
+              window.location.href = "{% url 'payment:payment-failed' %}";
+            }
+          },
+          error: function (xhr) {
+            // Redirect to failed page on AJAX error
+            window.location.href = "{% url 'payment:payment-failed' %}";
+          }
+        });
+      },
+
+      prefill: {
+        name: $("#name").val(),
+        email: $("#email").val(),
+      },
+
+      theme: {
+        color: "#3399cc",
+      },
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+    $(this).prop("disabled", false).text("Pay Now");
+  });
+</script>
+
+{% endblock %}
