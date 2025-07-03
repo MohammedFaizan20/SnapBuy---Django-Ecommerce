@@ -6,7 +6,13 @@ from django.conf import settings
 
 from django.conf.urls.static import static
 
+
+def health_check(request):
+    return HttpResponse("OK!")
+
 urlpatterns = [
+
+     path('__health__/', health_check),
 
     # Admin url
     
