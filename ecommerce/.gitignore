@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Django
+*.log
+*.sqlite3
+*.db
+*.pot
+*.pyc
+*.pyo
+
+# Media files
+media/
+
+# Static files (optional if you want to ignore generated staticfiles)
+staticfiles/
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.env
+*.env
+
+# IDE/editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
