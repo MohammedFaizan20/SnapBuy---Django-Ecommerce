@@ -3,16 +3,12 @@ from . models import Category, Product
 from django.shortcuts import get_object_or_404
 
 from django.http import HttpResponse
-from django.contrib.auth.models import User
+
 
 
 # Create your views here.
 
-def reset_admin_password(request):
-    user = User.objects.get(username='admin')
-    user.set_password('NewSecurePassword123')
-    user.save()
-    return HttpResponse("Admin password reset.")
+
 
 
 def store(request):

@@ -5,13 +5,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from django.http import HttpResponse
-from myapp.views import reset_admin_password
+
 
 
 
 urlpatterns = [
 
-    path('reset-admin/', reset_admin_password),
+    
     # Admin url
     
     path('admin/', admin.site.urls),
