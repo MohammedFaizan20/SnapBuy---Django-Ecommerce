@@ -30,7 +30,7 @@
         
         <div class="col-md-3 col-lg-2 order-md-first bg-light">
         
-            <img class="img-fluid mx-auto d-block" width="200px" alt="Responsive image" src="{{product.image.url}}"> <!-- Product image -->
+            <img class="img-fluid mx-auto d-block" width="200px" alt="Responsive image" src="{% static 'images/' %}{{ item.product.image_name }}"> <!-- Product image -->
         
         </div>
 
