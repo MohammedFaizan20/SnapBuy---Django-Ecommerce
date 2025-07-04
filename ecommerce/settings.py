@@ -19,7 +19,7 @@ env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # ✅ Use env variables correctly
-DEBUG = env.bool('DEBUG', default=False)
+DEBUG = env.bool('DEBUG', default=True)
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['.onrender.com'])
 CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
